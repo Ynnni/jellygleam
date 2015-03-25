@@ -58,11 +58,10 @@ RSpec.describe 'TokenAuth', type: :request do
 
   describe 'DELETE /auth/sign_out' do
     context 'destroy session with valid auth headers' do
-      it 'authenticate and destroy user session' do
-        delete destroy_user_session_path, {}, { test: :test }
-        binding.pry
-        # TODO: Need to write log in helper
-        # expect(response).to have_http_status(200)
+      it 'destroy user session when user signed in' do
+        user = create(:user)
+        delete destroy_user_session_path, {}, user.create_new_auth_token
+        expect(response).to have_http_status :success
       end
     end
 
