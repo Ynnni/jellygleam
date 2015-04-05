@@ -1,6 +1,6 @@
-class CreateRooms < ActiveRecord::Migration
+class CreateGroups < ActiveRecord::Migration
   def change
-    create_table :rooms do |t|
+    create_table :groups do |t|
       t.string :name
       t.string :key
 
