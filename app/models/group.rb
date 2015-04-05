@@ -14,4 +14,8 @@ class Group < ActiveRecord::Base
       errors.add :users, e.message
     end
   end
+
+  def leave(user)
+    users.delete user
+  end
 end

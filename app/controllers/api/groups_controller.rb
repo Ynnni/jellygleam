@@ -1,6 +1,6 @@
 module Api
   class GroupsController < BaseController
-    before_action :find_group, only: [:show, :update, :destroy, :join]
+    before_action :find_group, only: [:show, :update, :destroy, :join, :leave]
     before_action :authenticate, only: :join
 
     respond_to :json
@@ -41,6 +41,11 @@ module Api
 
     def join
       @group.join current_user
+      respond_with :api, @group
+    end
+
+    def leave
+      @group.leave current_user
       respond_with :api, @group
     end
 

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       end
       member do
         post :join
+        delete :leave
       end
     end
   end
