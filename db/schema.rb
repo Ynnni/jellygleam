@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150331060128) do
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "key",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
