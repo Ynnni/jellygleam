@@ -3,8 +3,12 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :groups, except: [:new, :edit] do
-      get :own, on: :collection
+      collection do
+        get :own
+        get :search
+      end
     end
-    # resources :trips, except: [:new, :edit]
   end
+
+  match '*path', to: 'application#routing_error', via: :all
 end

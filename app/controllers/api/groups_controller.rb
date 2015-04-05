@@ -1,6 +1,6 @@
 module Api
   class GroupsController < BaseController
-    before_action :find_group, except: [:index, :create, :own]
+    before_action :find_group, only: [:create, :show, :update, :destroy]
 
     respond_to :json
 
@@ -30,6 +30,11 @@ module Api
 
     def destroy
       @group.destroy
+      respond_with @group
+    end
+
+    def search
+      @group = Group.where('name like ?', "%#{params[:q]}%").limit 10
       respond_with @group
     end
 
