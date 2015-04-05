@@ -1,6 +1,7 @@
 module Api
   class GroupsController < BaseController
-    before_action :find_group, only: [:create, :show, :update, :destroy]
+    before_action :find_group, only: [:show, :update, :destroy, :join]
+    before_action :authenticate, only: :join
 
     respond_to :json
 
@@ -38,15 +39,25 @@ module Api
       respond_with @group
     end
 
+    def join
+      @group.join current_user
+      respond_with :api, @group
+    end
+
     private
+
+    # TODO: override authenticate method and encapsulate errors
+    def authenticate
+      return if @group.authenticate params[:password]
+      render json: { errors: { password: ['is incorrect'] } }, status: :forbidden
+    end
 
     def find_group
       @group = Group.find params[:id]
     end
 
     def group_params
-      params.require(:group).permit :name
+      params.require(:group).permit :name, :password, :password_confirmation
     end
   end
 end
-

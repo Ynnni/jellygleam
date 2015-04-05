@@ -1,8 +1,17 @@
 class Group < ActiveRecord::Base
   validates :name, presence: true
 
-  has_and_belongs_to_many :users
+  has_many :members
+  has_many :users, through: :members
 
   validates :name, presence: true, uniqueness: true
   has_secure_password
+
+  def join(user)
+    begin
+      users << user
+    rescue ActiveRecord::RecordInvalid => e
+      errors.add :users, e.message
+    end
+  end
 end

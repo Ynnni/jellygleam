@@ -20,13 +20,13 @@ ActiveRecord::Schema.define(version: 20150331060128) do
     t.datetime "updated_at",                  null: false
   end
 
-  create_table "groups_users", id: false, force: :cascade do |t|
-    t.integer "group_id", limit: 4, null: false
-    t.integer "user_id",  limit: 4, null: false
+  create_table "members", force: :cascade do |t|
+    t.integer "group_id", limit: 4
+    t.integer "user_id",  limit: 4
   end
 
-  add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id", using: :btree
-  add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id", using: :btree
+  add_index "members", ["group_id"], name: "index_members_on_group_id", using: :btree
+  add_index "members", ["user_id"], name: "index_members_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false

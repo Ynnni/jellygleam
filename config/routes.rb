@@ -7,6 +7,9 @@ Rails.application.routes.draw do
         get :own
         get :search
       end
+      member do
+        post :join
+      end
     end
   end
 
