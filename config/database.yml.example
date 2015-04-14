@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: transporter_development
+
+test:
+  <<: *default
+  database: transporter_test
+
+production:
+  <<: *default
+  database: transporter
+  username: root
+  password:

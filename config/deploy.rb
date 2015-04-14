@@ -23,7 +23,7 @@ set :deploy_to, '/home/api/www'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/unicorn/production.rb')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system')
@@ -52,7 +52,7 @@ namespace :setup do
     on roles :all do
       execute :mkdir, "-p #{shared_path}/log"
       execute :mkdir, "-p #{shared_path}/public/system"
-      %w(shared/config).each do |f|
+      %w(shared/config shared/config/unicorn).each do |f|
         upload!(f, shared_path, recursive: true)
       end
     end
