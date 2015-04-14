@@ -47,7 +47,7 @@ namespace :deploy do
 end
 
 namespace :setup do
-  desc 'Load config files'
+  desc 'Upload config files'
   task :upload do
     on roles :all do
       execute :mkdir, "-p #{shared_path}/log"
