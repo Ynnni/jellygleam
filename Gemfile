@@ -46,9 +46,21 @@ group :development, :test do
   gem 'pry'
 end
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'capistrano3-unicorn'
+end
+
 group :test do
   gem 'faker'
   gem 'database_cleaner', '~> 1.4'
+end
+
+group :production do
+  gem 'unicorn'
 end
 
 gem 'omniauth'
