@@ -35,8 +35,8 @@ module Api
     end
 
     def search
-      @group = Group.where('name like ?', "%#{params[:q]}%").limit 10
-      respond_with @group
+      @groups = Group.where('name like ?', "%#{params[:q]}%").limit 10
+      respond_with @groups
     end
 
     def join
@@ -51,10 +51,9 @@ module Api
 
     private
 
-    # TODO: override authenticate method and encapsulate errors
     def authenticate
       return if @group.authenticate params[:password]
-      render json: { errors: { password: ['is incorrect'] } }, status: :forbidden
+      render :unauthorized, status: :forbidden
     end
 
     def find_group

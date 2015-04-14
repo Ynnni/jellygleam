@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
 
   namespace :api, defaults: { format: :json } do
-    resources :groups, except: [:new, :edit] do
+    resources :groups, except: [:new, :edit]  do
+      resources :trips, except: [:new, :edit]
       collection do
         get :own
         get :search

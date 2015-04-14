@@ -1,5 +1,7 @@
 module Api
   class TripsController < BaseController
+    before_action :find_trip, only: [:show, :update, :destroy]
+
     def index
     end
 
@@ -13,6 +15,12 @@ module Api
     end
 
     def delete
+    end
+
+    private
+
+    def trip_params
+      params.require(:trip).permit!
     end
   end
 end
