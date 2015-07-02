@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331060128) do
+ActiveRecord::Schema.define(version: 20150425195247) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20150331060128) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string   "latitude",   limit: 255
+    t.string   "longitude",  limit: 255
+    t.string   "street",     limit: 255
+    t.string   "city",       limit: 255
+    t.integer  "state_id",   limit: 4
+    t.integer  "country_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "locations", ["country_id"], name: "index_locations_on_country_id", using: :btree
+  add_index "locations", ["state_id"], name: "index_locations_on_state_id", using: :btree
+
   create_table "members", force: :cascade do |t|
     t.integer "group_id", limit: 4
     t.integer "user_id",  limit: 4
@@ -27,6 +41,44 @@ ActiveRecord::Schema.define(version: 20150331060128) do
 
   add_index "members", ["group_id"], name: "index_members_on_group_id", using: :btree
   add_index "members", ["user_id"], name: "index_members_on_user_id", using: :btree
+
+  create_table "subscribers", force: :cascade do |t|
+    t.text     "notice",     limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.integer  "trip_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "subscribers", ["trip_id"], name: "index_subscribers_on_trip_id", using: :btree
+  add_index "subscribers", ["user_id"], name: "index_subscribers_on_user_id", using: :btree
+
+  create_table "transport_types", force: :cascade do |t|
+    t.string   "label",      limit: 255
+    t.string   "identifier", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.integer  "start_location_id",  limit: 4
+    t.integer  "end_location_id",    limit: 4
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "group_id",           limit: 4
+    t.integer  "owner_id",           limit: 4
+    t.integer  "transport_type_id",  limit: 4
+    t.integer  "max_people",         limit: 4
+    t.float    "max_baggage_weight", limit: 24
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "trips", ["end_location_id"], name: "index_trips_on_end_location_id", using: :btree
+  add_index "trips", ["group_id"], name: "index_trips_on_group_id", using: :btree
+  add_index "trips", ["owner_id"], name: "index_trips_on_owner_id", using: :btree
+  add_index "trips", ["start_location_id"], name: "index_trips_on_start_location_id", using: :btree
+  add_index "trips", ["transport_type_id"], name: "index_trips_on_transport_type_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false

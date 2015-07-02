@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
 
   has_many :members
   has_many :users, through: :members
+  has_many :trips
 
   validates :name, presence: true, uniqueness: true
   has_secure_password
