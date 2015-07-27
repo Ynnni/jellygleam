@@ -6,7 +6,7 @@ module Api
     respond_to :json
 
     def index
-      @trips = Trip.joins(:group).where(groups: { id: params[:id] })
+      @trips = Trip.joins(:group).where(groups: { id: params[:group_id] })
       respond_with @trips
     end
 
