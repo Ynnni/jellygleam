@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   has_many :groups, through: :members
   has_many :trips, foreign_key: :owner_id
 
-  # has_many :subscribers
-  # has_many :trips, through: :subscribers
+  has_many :subscribers
+  has_many :trips, through: :subscribers
 end
